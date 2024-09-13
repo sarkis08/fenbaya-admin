@@ -2,7 +2,7 @@
 
 import * as z from "zod";
 
-import { Size } from "@prisma/client";
+import { Color } from "@prisma/client";
 import { Heading } from "@/components/heading";
 import { Button } from "@/components/ui/button";
 import { TrashIcon } from "lucide-react";
@@ -25,18 +25,18 @@ import axios from "axios";
 import { AlertModal } from "@/components/modals/alert-modal";
 import { useOrigin } from "@/hooks/use-origin";
 
-const SizeFormSchema = z.object({
+const ColorFormSchema = z.object({
   name: z.string().min(1),
-  value: z.string().min(1),
+  value: z.string().min(4),
 });
 
-type SizeFormValues = z.infer<typeof SizeFormSchema>;
+type ColorFormValues = z.infer<typeof ColorFormSchema>;
 
-interface SizeFormProps {
-  initialData: Size | null;
+interface ColorFormProps {
+  initialData: Color | null;
 }
 
-const SizeForm = ({ initialData }: SizeFormProps) => {
+const ColorForm = ({ initialData }: ColorFormProps) => {
   const params = useParams();
   const router = useRouter();
   const origin = useOrigin();
@@ -44,36 +44,36 @@ const SizeForm = ({ initialData }: SizeFormProps) => {
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  const title = initialData ? "Edit size" : "Create size";
-  const description = initialData ? "Edit a size" : "Add a new size";
+  const title = initialData ? "Edit color" : "Create color";
+  const description = initialData ? "Edit a color" : "Add a new color";
   const toastMessage = initialData
-    ? "Size updated."
-    : "Size created.";
+    ? "Color updated."
+    : "Color created.";
   const action = initialData ? "Save changes" : "Create";
 
-  const CategoryForm = useForm<SizeFormValues>({
-    resolver: zodResolver(SizeFormSchema),
+  const ColorForm = useForm<ColorFormValues>({
+    resolver: zodResolver(ColorFormSchema),
     defaultValues: initialData || {
       name: "",
       value: "",
     },
   });
 
-  const onSubmit = async (data: SizeFormValues) => {
+  const onSubmit = async (data: ColorFormValues) => {
     try {
       setLoading(true);
       if (initialData) {
         await axios.patch(
-          `/api/${params.storeId}/sizes/${params.sizeId}`,
+          `/api/${params.storeId}/colors/${params.colorId}`,
           data
         );
       } else {
-        await axios.post(`/api/${params.storeId}/sizes`, data);
+        await axios.post(`/api/${params.storeId}/colors`, data);
       }
       router.refresh();
       toast.success(toastMessage);
       setTimeout(() => {
-        router.push(`/${params.storeId}/sizes`);
+        router.push(`/${params.storeId}/colors`);
       }, 1500);
     } catch (error) {
       toast.error("Something went wrong");
@@ -86,14 +86,14 @@ const SizeForm = ({ initialData }: SizeFormProps) => {
     try {
       setLoading(true);
       await axios.delete(
-        `/api/${params.storeId}/sizes/${params.sizeId}`
+        `/api/${params.storeId}/colors/${params.colorId}`
       );
       router.refresh();
-      router.push(`/${params.storeId}/sizes`);
-      toast.success("Size deleted successfully");
+      router.push(`/${params.storeId}/colors`);
+      toast.success("Color deleted successfully");
     } catch (error) {
       toast.error(
-        "Make sure you removed products using this size first"
+        "Make sure you removed products using this color first"
       );
     } finally {
       setLoading(false);
@@ -123,22 +123,22 @@ const SizeForm = ({ initialData }: SizeFormProps) => {
         )}
       </div>
       <Separator />
-      <Form {...CategoryForm}>
+      <Form {...ColorForm}>
         <form
-          onSubmit={CategoryForm.handleSubmit(onSubmit)}
+          onSubmit={ColorForm.handleSubmit(onSubmit)}
           className="space-y-8 w-full"
         >
           <div className="grid grid-cols-3 gap-8">
             <FormField
-              control={CategoryForm.control}
+              control={ColorForm.control}
               name="name"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Size</FormLabel>
+                  <FormLabel>Color</FormLabel>
                   <FormControl>
                     <Input
                       disabled={loading}
-                      placeholder="Insert Size Name"
+                      placeholder="Insert Color Name"
                       {...field}
                     />
                   </FormControl>
@@ -147,7 +147,7 @@ const SizeForm = ({ initialData }: SizeFormProps) => {
               )}
             />
             <FormField
-              control={CategoryForm.control}
+              control={ColorForm.control}
               name="value"
               render={({ field }) => (
                 <FormItem>
@@ -155,7 +155,7 @@ const SizeForm = ({ initialData }: SizeFormProps) => {
                   <FormControl>
                     <Input
                       disabled={loading}
-                      placeholder="Insert Value Name"
+                      placeholder="Insert Color Value, eg. #fff"
                       {...field}
                     />
                   </FormControl>
@@ -177,4 +177,4 @@ const SizeForm = ({ initialData }: SizeFormProps) => {
   );
 };
 
-export { SizeForm };
+export { ColorForm };
