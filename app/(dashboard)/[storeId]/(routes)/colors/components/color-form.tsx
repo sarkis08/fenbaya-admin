@@ -27,7 +27,9 @@ import { useOrigin } from "@/hooks/use-origin";
 
 const ColorFormSchema = z.object({
   name: z.string().min(1),
-  value: z.string().min(4),
+  value: z.string().min(4).regex(/^#/, {
+    message: "String must begin with # and have valid hex code"
+  }).max(7),
 });
 
 type ColorFormValues = z.infer<typeof ColorFormSchema>;
@@ -153,11 +155,14 @@ const ColorForm = ({ initialData }: ColorFormProps) => {
                 <FormItem>
                   <FormLabel>Value</FormLabel>
                   <FormControl>
+                    <div className="flex items-center gap-x-4">
                     <Input
                       disabled={loading}
                       placeholder="Insert Color Value, eg. #fff"
                       {...field}
                     />
+                    <div className="p-4 rounded-full border" style={{ backgroundColor: field.value }} />
+                    </div>
                   </FormControl>
                   <FormMessage />
                 </FormItem>

@@ -1,4 +1,4 @@
-import { BillboardForm } from "@/app/(dashboard)/[storeId]/(routes)/billboards/[billboardId]/components/billboard-form";
+import { BillboardForm } from "@/app/(dashboard)/[storeId]/(routes)/billboards/components/billboard-form";
 import prismadb from "@/lib/prismadb";
 
 export default async function BillboardPage({

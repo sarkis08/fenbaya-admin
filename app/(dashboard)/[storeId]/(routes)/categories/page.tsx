@@ -1,6 +1,6 @@
 import prismadb from "@/lib/prismadb";
-import { CategoryClient } from "./[categoryId]/components/clients";
-import { CategoryColumn } from "./[categoryId]/components/columns";
+import { CategoryClient } from "./components/clients";
+import { CategoryColumn } from "./components/columns";
 import { format } from "date-fns";
 
 

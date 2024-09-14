@@ -1,5 +1,5 @@
 import prismadb from "@/lib/prismadb";
-import { CategoryForm } from "./components/category-form";
+import { CategoryForm } from "../components/category-form";
 
 export default async function CategoryPage({
   params,

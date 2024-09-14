@@ -61,7 +61,7 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
               fill
               className="object-cover"
               src={url}
-              alt="Billboard image"
+              alt="image"
               
             />
           </div>
