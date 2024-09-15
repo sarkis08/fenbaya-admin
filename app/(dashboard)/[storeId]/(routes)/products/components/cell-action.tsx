@@ -8,6 +8,7 @@ import { toast } from "sonner"
 import { useParams, useRouter } from "next/navigation"
 import { useState } from "react"
 import { AlertModal } from "@/components/modals/alert-modal"
+import axios from "axios"
 
 interface CellActionProps {
     data: ProductColumn
@@ -32,14 +33,12 @@ export const CellAction: React.FC<CellActionProps> = ({
     const onDelete = async () => {
         try {
             setLoading(true)
-            await fetch(`/api/${params.storeId}/products/${data.id}`, {
-                method: 'DELETE',
-            })
-            setLoading(false)
+            await axios.delete(`/api/${params.storeId}/products/${data.id}`)
             toast.success("Product deleted successfully.")
             router.refresh()
         } catch (error) {
-            toast.error("Something went wrong while deleting the product.")
+            toast.error("Something went wrong while deleting the product.") 
+        } finally {
             setLoading(false)
             setOpen(false)
         }

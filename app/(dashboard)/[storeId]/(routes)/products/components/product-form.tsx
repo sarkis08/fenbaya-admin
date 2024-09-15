@@ -56,7 +56,12 @@ interface ProductFormProps {
   colors: Color[];
 }
 
-const ProductForm = ({ initialData, categories, sizes, colors }: ProductFormProps) => {
+const ProductForm = ({
+  initialData,
+  categories,
+  sizes,
+  colors,
+}: ProductFormProps) => {
   const params = useParams();
   const router = useRouter();
   const origin = useOrigin();
@@ -88,7 +93,7 @@ const ProductForm = ({ initialData, categories, sizes, colors }: ProductFormProp
         },
   });
 
-  const onSubmit = async (data: ProductFormValues) => {
+  const onProductSubmit = async (data: ProductFormValues) => {
     try {
       setLoading(true);
       if (initialData) {
@@ -114,16 +119,14 @@ const ProductForm = ({ initialData, categories, sizes, colors }: ProductFormProp
   const onDelete = async () => {
     try {
       setLoading(true);
-      await axios.delete(
-        `/api/${params.storeId}/products/${params.productId}`
-      );
-      router.refresh();
+      await axios.delete(`/api/${params.storeId}/products/${params.productId}`);
       router.push(`/${params.storeId}/products`);
-      toast.success("Product deleted successfully");
+      router.refresh();
+      setTimeout(() => {
+        toast.success("Product deleted successfully");
+      }, 1500);
     } catch (error) {
-      toast.error(
-        "Something went wrong"
-      );
+      toast.error("Something went wrong");
     } finally {
       setLoading(false);
       setOpen(false);
@@ -154,7 +157,7 @@ const ProductForm = ({ initialData, categories, sizes, colors }: ProductFormProp
       <Separator />
       <Form {...ProductForm}>
         <form
-          onSubmit={ProductForm.handleSubmit(onSubmit)}
+          onSubmit={ProductForm.handleSubmit(onProductSubmit)}
           className="space-y-8 w-full"
         >
           <FormField
@@ -321,14 +324,16 @@ const ProductForm = ({ initialData, categories, sizes, colors }: ProductFormProp
               render={({ field }) => (
                 <FormItem className="flex flex-row items-center space-x-3 space-y-0 rounded-md border p-4">
                   <FormControl>
-                    <Checkbox 
+                    <Checkbox
                       checked={field.value}
                       onCheckedChange={field.onChange}
                     />
                   </FormControl>
                   <div className="space-y-1 leading-none">
-                  <FormLabel>Featured</FormLabel>
-                  <FormDescription>This product will appear on the home page</FormDescription>
+                    <FormLabel>Featured</FormLabel>
+                    <FormDescription>
+                      This product will appear on the home page
+                    </FormDescription>
                   </div>
                 </FormItem>
               )}
@@ -340,19 +345,20 @@ const ProductForm = ({ initialData, categories, sizes, colors }: ProductFormProp
               render={({ field }) => (
                 <FormItem className="flex flex-row items-center space-x-3 space-y-0 rounded-md border p-4">
                   <FormControl>
-                    <Checkbox 
+                    <Checkbox
                       checked={field.value}
                       onCheckedChange={field.onChange}
                     />
                   </FormControl>
                   <div className="space-y-1 leading-none">
-                  <FormLabel>Archieved</FormLabel>
-                  <FormDescription>This product will not appear in the store</FormDescription>
+                    <FormLabel>Archieved</FormLabel>
+                    <FormDescription>
+                      This product will not appear in the store
+                    </FormDescription>
                   </div>
                 </FormItem>
               )}
             />
-            
           </div>
           <Button type="submit">
             {!loading ? (

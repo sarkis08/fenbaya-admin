@@ -67,7 +67,14 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
           </div>
         ))}
       </div>
-      <CldUploadWidget onSuccess={handleUpload}  uploadPreset="mmenobgc">
+      <CldUploadWidget 
+          onSuccess={handleUpload}  
+          uploadPreset="mmenobgc"
+          options={{
+            multiple: true,
+            maxFiles: 5,
+            
+          }}>
         {({ open }) => {
           const onClick = (() => {
             open();

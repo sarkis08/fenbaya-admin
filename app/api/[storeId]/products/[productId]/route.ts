@@ -142,14 +142,12 @@ export async function DELETE(
       return new NextResponse("Not authenticated", { status: 401 });
     }
 
-    // Check if productId are provided
+    // Check if productId is provided
     if (!params.productId) {
-      return new NextResponse("Product ID are required", {
-        status: 400,
-      });
+      return new NextResponse("Product ID is required", { status: 400 });
     }
 
-    // find the store by userId
+    // Find the store by userId
     const storeByUserId = await prismadb.store.findFirst({
       where: {
         id: params.storeId,
@@ -162,13 +160,14 @@ export async function DELETE(
       return new NextResponse("Unauthorized", { status: 403 });
     }
 
-    const product = await prismadb.product.deleteMany({
+    // Delete the product by productId
+    const deleteProduct = await prismadb.product.delete({
       where: {
         id: params.productId,
       },
     });
 
-    return NextResponse.json(product);
+    return NextResponse.json({ message: "Product deleted successfully", deleteProduct });
   } catch (err) {
     console.log("[PRODUCT_DELETE_ERROR]", err);
     return new NextResponse("Internal error", { status: 500 });

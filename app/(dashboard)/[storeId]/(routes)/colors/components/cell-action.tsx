@@ -14,6 +14,7 @@ import { toast } from "sonner";
 import { useParams, useRouter } from "next/navigation";
 import { useState } from "react";
 import { AlertModal } from "@/components/modals/alert-modal";
+import axios from "axios";
 
 interface CellActionProps {
   data: ColorColumn;
@@ -36,14 +37,12 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
   const onDelete = async () => {
     try {
       setLoading(true);
-      await fetch(`/api/${params.storeId}/colors/${data.id}`, {
-        method: "DELETE",
-      });
-      setLoading(false);
+      await axios.delete(`/api/${params.storeId}/colors/${data.id}`);
       toast.success("Size deleted successfully.");
       router.refresh();
     } catch (error) {
-      toast.error("Something went wrong while deleting the size.");
+      toast.error("Make sure you removed products using this color first.");
+    } finally {
       setLoading(false);
       setOpen(false);
     }

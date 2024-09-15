@@ -32,7 +32,7 @@ export const ProductClient = ({
             </div>
             <Separator />
             {/* Billboard List */}
-            <DataTable searchKey="label" columns={columns} data={data} />
+            <DataTable searchKey="name" columns={columns} data={data} />
             <Heading title="API" description="API calls for products" />
             <Separator />
             <ApiList entityName="products" entityIdName="productId" />
