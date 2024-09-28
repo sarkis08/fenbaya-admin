@@ -28,11 +28,7 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
 
   // onUpload image function logic
   const handleUpload = (results: any) => {
-    if (results.event === 'success') {
-      console.log(results);
-      onChange(results.info.secure_url)
-      
-    }
+    onChange(results.info.secure_url);
   };
 
   if (!isMounted) {
@@ -57,28 +53,22 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
                 <TrashIcon className="h-4 w-4" />
               </Button>
             </div>
-            <Image
-              fill
-              className="object-cover"
-              src={url}
-              alt="image"
-              
-            />
+            <Image fill className="object-cover" src={url} alt="image" />
           </div>
         ))}
       </div>
-      <CldUploadWidget 
-          onSuccess={handleUpload}  
-          uploadPreset="mmenobgc"
-          options={{
-            multiple: true,
-            maxFiles: 5,
-            
-          }}>
+      <CldUploadWidget
+        onSuccess={handleUpload}
+        uploadPreset="mmenobgc"
+        options={{
+          multiple: true,
+          maxFiles: 5,
+        }}
+      >
         {({ open }) => {
-          const onClick = (() => {
+          const onClick = () => {
             open();
-          })
+          };
           return (
             <Button
               type="button"
@@ -92,7 +82,6 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
           );
         }}
       </CldUploadWidget>
-      
     </div>
   );
 };
