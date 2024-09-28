@@ -176,7 +176,7 @@ const ProductForm = ({
                     } // Add new image URL
                     onRemove={(url) =>
                       field.onChange([
-                        ...field.value.filter((current) => current.url === url),
+                        ...field.value.filter((current) => current.url !== url),
                       ])
                     } // Remove selected image URL
                   />

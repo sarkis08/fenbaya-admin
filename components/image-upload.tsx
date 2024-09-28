@@ -5,10 +5,10 @@ import { Button } from "./ui/button";
 import { ImagePlus, TrashIcon } from "lucide-react";
 import Image from "next/image";
 
-import { CldUploadWidget, CloudinaryUploadWidgetResults } from "next-cloudinary";
+import { CldUploadWidget } from "next-cloudinary";
 
 interface ImageUploadProps {
-  disabled: boolean;
+  disabled?: boolean;
   onChange: (value: string) => void;
   onRemove: (value: string) => void;
   value: string[];
