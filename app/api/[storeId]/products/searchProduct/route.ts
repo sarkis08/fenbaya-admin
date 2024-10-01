@@ -25,7 +25,7 @@ export async function GET(req: Request, res: Response) {
     });
 
     const response = NextResponse.json(products);
-    response.headers.set('Access-Control-Allow-Origin', 'http://localhost:3001');
+    response.headers.set('Access-Control-Allow-Origin', 'https://fenbaya-admin.vercel.app/api/66de4a96-47fc-4e55-94f8-c9b38d9b3c25');
     return response;
   } catch (error) {
     console.error("[PRODUCT_SEARCH_ERROR]", error);
