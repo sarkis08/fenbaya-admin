@@ -1,9 +1,7 @@
 import { NextResponse } from "next/server";
 import prismadb from "@/lib/prismadb";
-import cors from "@/lib/cors";
 
 export async function GET(req: Request, res: Response) {
-  await runMiddleware(req, res, cors); // Apply CORS middleware
 
   const { searchParams } = new URL(req.url);
   const query = searchParams.get("query") || "";  // Extract query parameter
