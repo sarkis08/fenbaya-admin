@@ -1,10 +1,8 @@
 import { clerkMiddleware, createRouteMatcher } from '@clerk/nextjs/server'
 
-//const isPublicRoutes = createRouteMatcher(["/api/:path*"])
-
-
 
 export default clerkMiddleware();
+
 
 export const config = {
   matcher: [
